@@ -6,7 +6,7 @@ This package provides some additional, convenient helpers for you Laravel projec
 
 Install the package with Composer:
 
-    composer require laravel/helpers
+    composer require sirmathays/convenient-laravel-helpers
 
 ## License
 
