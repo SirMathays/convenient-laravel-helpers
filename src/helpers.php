@@ -98,12 +98,9 @@ if (!function_exists('get_bool')) {
     function get_bool($value): bool
     {
         switch ($value) {
-            case 'true':
-                return true;
-            case 'false':
-                return false;
-            default:
-                return set_type($value, 'boolean');
+            case 'true': return true;
+            case 'false': return false;
+            default: return set_type($value, 'boolean');
         }
     }
 }
