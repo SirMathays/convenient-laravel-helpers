@@ -1,6 +1,6 @@
 # Convenient Laravel Helpers
 
-This package provides some additional, convenient helpers for you Laravel project.
+This package provides some additional, convenient helpers for you to use with your Laravel project.
 
 ## Installation
 
