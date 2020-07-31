@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
 
@@ -121,18 +122,28 @@ if (!function_exists('class_namespace')) {
 if (!function_exists('___')) {
     /**
      * Translate given messages and glue them together.
-     * @link https://gitlab.com/snippets/1993843
      *
      * @param array $keys
+     * Translation keys / strings that will be translated.
      * @param array $replace
+     * Wildcards to be replaced. Example: `['name' => 'value']` would replace `:name` with `value` in given keys.
+     * @param array $numbers
+     * Array of numbers that dictate whether choice translation method will be utilized for matching index in `$keys` array.
      * @param string|null $locale
+     * Locale for given translation keys.
      * @param string $glue
+     * What the translated keys should be glued together with.
+     * 
      * @return string
      */
-    function ___(array $keys, array $replace = [], string $locale = null, string $glue = ' '): string
+    function ___(array $keys, array $replace = [], array $numbers = [], string $locale = null, string $glue = ' '): string
     {
-        foreach ($keys as &$key) $key = __($key, [], $locale);
+        foreach ($keys as $index => &$key) {
+            $key = isset($numbers[$index]) || Str::contains($key, '|')
+                ? Lang::choice($key, Arr::get($numbers, $index, 1), [], $locale)
+                : Lang::get($key, [], $locale);
+        }
 
-        return __(implode($glue, $keys), $replace);
+        return Lang::get(implode($glue, $keys), $replace);
     }
 }
