@@ -20,6 +20,27 @@ if (!function_exists('class_uses_trait')) {
     }
 }
 
+if (!function_exists('array_depth')) {
+    /**
+     * Return integer describing the max depth of the given array.
+     *
+     * @param array $array
+     * @return int
+     */
+    function array_depth(array $array)
+    {
+        $depth = 0;
+        $iteIte = new RecursiveIteratorIterator(new RecursiveArrayIterator($array));
+
+        foreach ($iteIte as $ite) {
+            $d = $iteIte->getDepth();
+            $depth = $d > $depth ? $d : $depth;
+        }
+
+        return $depth;
+    }
+}
+
 if (!function_exists('class_implements_interface')) {
     /**
      * Return boolean value whether the given class implements given interface.
