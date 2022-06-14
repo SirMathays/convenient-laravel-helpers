@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Support;
+namespace SirMathays\Convenience;
 
 use Closure;
 use Illuminate\Support\Str;
