@@ -60,17 +60,26 @@ generic.
 ```php
 use SirMathays\Convenience\Discovery;
 
-$all = Discovery::within('app\Models');
+$all = Discovery::within('app\Models')->toArray();
 // ["App\Models\User", "App\Models\BlogPost", "App\Models\Concerns\Taggable", "App\Models\Contracts\BlogWriter"]
 
-$classes = Discovery::classesWithin('app\Models');
+$classes = Discovery::classesWithin('app\Models')->toArray();
 // ["App\Models\User", "App\Models\BlogPost"]
 
-$traits = Discovery::traitsWithin('app\Models');
+$traits = Discovery::traitsWithin('app\Models')->toArray();
 // ["App\Models\Concerns\Taggable"]
 
-$interfaces = Discovery::interfacesWithin('app\Models');
+$interfaces = Discovery::interfacesWithin('app\Models')->toArray();
 // ["App\Models\Contracts\BlogWriter"]
+
+$usingClasses = Discovery::usesWithin('app\Models', 'App\Models\Concerns\Taggable')->toArray();
+// ["App\Models\BlogPost"]
+
+$implementingClasses = Discovery::implementsWithin('app\Models', 'App\Models\Contracts\BlogWriter')->toArray();
+// ["App\Models\User"]
+
+$extendingClasses = Discovery::extendsWithin('app\Models', 'Illuminate\Database\Eloquent\Model')->toArray();
+// ["App\Models\User", "App\Models\BlogPost"]
 ```
 
 ## License

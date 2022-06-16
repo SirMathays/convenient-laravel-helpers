@@ -105,6 +105,52 @@ class Discovery
     }
 
     /**
+     * Get all of the classes that use the given trait by searching the given directory.
+     *
+     * @param string $path
+     * @param string $trait
+     * @param bool $recursive
+     * @param string|null $basePath
+     * @return \Illuminate\Support\Collection
+     */
+    public static function usesWithin(string $path, string $trait, bool $recursive = true, string $basePath = null)
+    {
+        return static::within($path, $basePath, function (ReflectionClass $class) use ($trait, $recursive) {
+            return class_uses_trait($class->getName(), $trait, $recursive);
+        });
+    }
+
+    /**
+     * Get all of the classes that implement the given interface by searching the given directory.
+     *
+     * @param string $path
+     * @param string $interface
+     * @param string|null $basePath
+     * @return \Illuminate\Support\Collection
+     */
+    public static function implementsWithin(string $path, string $interface, string $basePath = null)
+    {
+        return static::within($path, $basePath, function (ReflectionClass $class) use ($interface) {
+            return class_implements_interface($class->getName(), $interface);
+        });
+    }
+
+    /**
+     * Get all of the classes that extend the given class by searching the given directory.
+     *
+     * @param string $path
+     * @param string $interface
+     * @param string|null $basePath
+     * @return \Illuminate\Support\Collection
+     */
+    public static function extendsWithin(string $path, string $parent, string $basePath = null)
+    {
+        return static::within($path, $basePath, function (ReflectionClass $class) use ($parent) {
+            return class_extends($class->getName(), $parent);
+        });
+    }
+
+    /**
      * Extract the class name from the given file path.
      *
      * @param \SplFileInfo $file
